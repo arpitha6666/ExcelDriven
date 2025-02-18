@@ -1,9 +1,6 @@
 package utils;
 
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.CellValue;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -54,5 +51,51 @@ public class ExcelUtil {
         return data;
 
     }
+
+    public void getColumnNumber(String excelFilePath, String findValue) throws IOException {
+        fis = new FileInputStream(excelFilePath);
+        myWorkbook = new XSSFWorkbook(fis);
+        mySheet = myWorkbook.getSheetAt(0);
+        numOfRows = mySheet.getPhysicalNumberOfRows();
+        XSSFRow row = mySheet.getRow(0);
+        numOfCols = row.getLastCellNum();
+        Iterator<Row> rows = mySheet.iterator();
+        Row firstRow = rows.next();
+        Iterator<Cell> cells = firstRow.cellIterator();
+        int k = 0;
+        int column = 0;
+        while (cells.hasNext()) {
+            Cell cellValue = cells.next();
+            if (cellValue.getStringCellValue().equalsIgnoreCase(findValue)) {
+                //desired column
+                column = k;
+            }
+            k++;
+        }
+    }
+
+    public void getRowNumber(String excelFilePath, String findValue) throws IOException {
+        fis = new FileInputStream(excelFilePath);
+        myWorkbook = new XSSFWorkbook(fis);
+        mySheet = myWorkbook.getSheetAt(0);
+        numOfRows = mySheet.getPhysicalNumberOfRows();
+        XSSFRow row = mySheet.getRow(0);
+        numOfCols = row.getLastCellNum();
+        Iterator<Row> rows = mySheet.iterator();
+        Row firstRow = rows.next();
+        Iterator<Cell> cells = firstRow.cellIterator();
+        int k = 0;
+        int column = 0;
+        while (cells.hasNext()) {
+            Cell cellValue = cells.next();
+            if (cellValue.getStringCellValue().equalsIgnoreCase(findValue)) {
+                //desired column
+                column = k;
+            }
+            k++;
+        }
+    }
+
+
 
 }
