@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -16,7 +18,14 @@ public class ExcelUploadDownload {
     public static void main(String[] args) {
         String fruitName = "Apple";
         WebDriverManager.firefoxdriver().setup();
-        WebDriver driver = new FirefoxDriver();
+        FirefoxOptions options = new FirefoxOptions();
+        options.addPreference("browser.download.folderList", 2);
+        options.addPreference("browser.helperApps.alwaysAsk.force", false);
+        options.addPreference("browser.download.dir", System.getProperty("user.dir"));
+        options.addPreference("browser.download.defaultFolder",System.getProperty("user.dir"));
+        options.addPreference("browser.download.manager.showWhenStarting", false);
+
+        WebDriver driver = new FirefoxDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://rahulshettyacademy.com/upload-download-test/index.html");
@@ -24,7 +33,7 @@ public class ExcelUploadDownload {
 
         //upload file
         WebElement upload =driver.findElement(By.cssSelector("input[type='file']"));
-        String path = new File("C://Users//arpit//Downloads//download.xlsx").getAbsolutePath();
+        String path = new File(System.getProperty("user.dir")).getAbsolutePath();
         upload.sendKeys(path);
 
 
